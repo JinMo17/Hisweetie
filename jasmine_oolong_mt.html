@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Boba Tea Volume Adjustment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Boba Tea Volume Adjustment</h2>
+        <div class="form-group">
+            <label for="cupSize">Cup Size:</label>
+            <select id="cupSize">
+                <option value="470">Medium (470 ml)</option>
+                <option value="650">Large (650 ml)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="iceLevel">Ice Level:</label>
+            <select id="iceLevel">
+                <option value="0">No Ice (0 ml)</option>
+                <option value="50">Light (50 ml)</option>
+                <option value="90">Regular (90 ml)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="topping">Topping:</label>
+            <select id="topping">
+                <option value="0">0 Toppings (0 ml)</option>
+                <option value="100">1 Topping (100 ml)</option>
+                <option value="180">2 Toppings (180 ml)</option>
+            </select>
+        </div>
+        <div id="result">
+            <strong>Shaker Contents Breakdown:</strong>
+            <div>Tea: <span id="teaVolume">0</span> ml</div>
+            <div>Milk: <span id="milkVolume">0</span> ml</div>
+            <div>Ice in Shaker: <span id="iceInShaker">0</span> ml</div>
+            <div>Total in Shaker: <span id="totalInShaker">0</span> ml</div>
+        </div>
+    </div>
+    <script>
+        function calculateVolume() {
+            let cupSize = parseInt(document.getElementById("cupSize").value);
+            let iceLevel = parseInt(document.getElementById("iceLevel").value);
+            let topping = parseInt(document.getElementById("topping").value);
+
+            // Calculate Tea, Milk, and Ice in Shaker volumes
+            let teaVolume = Math.round(((cupSize - iceLevel - topping) / 5 * 3) / 10) * 10;
+            let milkVolume = Math.round(((cupSize - iceLevel - topping) / 5 * 1) / 10) * 10;
+            let iceInShaker = Math.round(((cupSize - iceLevel - topping) / 5 * 1.5) / 10) * 10;
+
+            // Calculate Total in Shaker
+            let totalInShaker = teaVolume + milkVolume + iceInShaker;
+
+            document.getElementById("teaVolume").textContent = teaVolume;
+            document.getElementById("milkVolume").textContent = milkVolume;
+            document.getElementById("iceInShaker").textContent = iceInShaker;
+            document.getElementById("totalInShaker").textContent = totalInShaker;
+        }
+
+        document.getElementById("cupSize").addEventListener("change", calculateVolume);
+        document.getElementById("iceLevel").addEventListener("change", calculateVolume);
+        document.getElementById("topping").addEventListener("change", calculateVolume);
+
+        // Initial calculation
+        calculateVolume();
+    </script>
+</body>
+</html>
